@@ -21,8 +21,9 @@
             font-family: 'Cairo', sans-serif;
             background-color: var(--dark-bg);
             color: #e2e8f0;
-            overflow: hidden;
-            height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            min-height: 100vh;
             width: 100vw;
         }
         
@@ -189,7 +190,7 @@
     </div>
 
     <!-- Audio -->
-    <audio id="bg-music" src="WhatsApp Audio 2026-05-27 at 12.53.05 AM.mpeg" preload="auto" loop></audio>
+    <audio id="bg-music" src="WhatsApp Audio 2026-05-27 at 12.53.05 AM.mpeg" preload="auto"></audio>
 
     <!-- Overlay -->
     <div id="interaction-overlay" class="fixed inset-0 z-[100] bg-[#030508] flex flex-col items-center justify-center text-center p-6 transition-all duration-1000">
@@ -204,8 +205,8 @@
     </div>
 
     <!-- Main Content -->
-    <div id="main-content" class="max-w-4xl w-full text-center z-10 opacity-0 transform scale-90 translate-y-10 transition-all duration-1000 ease-out">
-        <div class="glass-card p-8 md:p-20 rounded-[3rem] relative overflow-hidden">
+    <div id="main-content" class="max-w-4xl w-full text-center z-10 opacity-0 transform scale-90 translate-y-10 transition-all duration-1000 ease-out py-10">
+        <div class="glass-card p-6 md:p-20 rounded-[3rem] relative overflow-hidden mx-auto">
 
             <!-- Elegant Corner Ornaments -->
             <div class="absolute top-0 right-0 p-8 opacity-20">
