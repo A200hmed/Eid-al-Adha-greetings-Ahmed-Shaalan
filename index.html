@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تهنئة عيد الأضحى | أحمد شعلان</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+         :root {
+            --gold: #d4af37;
+            --gold-light: #f9e29c;
+            --dark-bg: #05070a;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark-bg);
+            color: #e2e8f0;
+            overflow: hidden;
+        }
+        
+        .font-amiri {
+            font-family: 'Amiri', serif;
+        }
+        
+        .premium-gradient {
+            background: radial-gradient(circle at center, #111827 0%, #05070a 100%);
+        }
+        
+        .gold-text {
+            background: linear-gradient(to bottom, #f9e29c 0%, #d4af37 50%, #b8860b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+        
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(212, 175, 55, 0.05);
+        }
+        
+        .animate-slow-spin {
+            animation: spin 20s linear infinite;
+        }
+        
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .btn-premium {
+            background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-premium::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+        }
+        
+        .btn-premium:hover::after {
+            left: 100%;
+        }
+        
+        .floating-element {
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-15px) scale(1.02);
+            }
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+        
+        @keyframes twinkle {
+            0%,
+            100% {
+                opacity: 0.1;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.2);
+            }
+        }
+    </style>
+</head>
+
+<body class="premium-gradient min-h-screen flex items-center justify-center p-4 relative">
+
+    <!-- Background Decoration -->
+    <div class="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
+        <div class="absolute -top-[10%] -right-[10%] w-[50%] h-[50%] bg-yellow-900/20 blur-[120px] rounded-full"></div>
+        <div class="absolute -bottom-[10%] -left-[10%] w-[50%] h-[50%] bg-blue-900/20 blur-[120px] rounded-full"></div>
+        <div id="stars-container"></div>
+    </div>
+
+    <!-- Audio -->
+    <audio id="bg-music" src="WhatsApp Audio 2026-05-27 at 12.53.05 AM.mpeg" preload="auto"></audio>
+
+    <!-- Overlay -->
+    <div id="interaction-overlay" class="fixed inset-0 z-[100] bg-[#05070a] flex flex-col items-center justify-center text-center p-6 transition-all duration-1000">
+        <div class="relative mb-12">
+            <div class="absolute inset-0 bg-yellow-500/10 blur-3xl rounded-full"></div>
+            <i class="fas fa-kaaba text-7xl md:text-9xl text-yellow-500/80 mb-6 relative z-10"></i>
+        </div>
+        <h1 class="text-2xl md:text-4xl font-light text-slate-400 mb-8 tracking-[0.2em] uppercase">Private Invitation</h1>
+        <button id="start-btn" class="btn-premium px-12 py-5 text-slate-900 font-black rounded-full text-xl shadow-[0_0_30px_rgba(212,175,55,0.3)] hover:shadow-[0_0_50px_rgba(212,175,55,0.5)] active:scale-95 transition-all">
+            استلام التهنئة 🌙
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="max-w-3xl w-full text-center z-10 opacity-0 transform scale-95 transition-all duration-1000">
+        <div class="glass-card p-10 md:p-16 rounded-[2.5rem] relative overflow-hidden floating-element">
+
+            <!-- Elegant Corner Ornaments -->
+            <div class="absolute top-0 right-0 p-6 opacity-30">
+                <i class="fas fa-mosque text-4xl text-yellow-500"></i>
+            </div>
+            <div class="absolute bottom-0 left-0 p-6 opacity-30">
+                <i class="fas fa-moon text-4xl text-yellow-500"></i>
+            </div>
+
+            <!-- Sheep Illustration -->
+            <div class="flex justify-center mb-6">
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-yellow-500/20 blur-2xl rounded-full group-hover:bg-yellow-500/40 transition-all"></div>
+                    <svg class="w-24 h-24 md:w-32 md:h-32 relative z-10 fill-yellow-500/90 drop-shadow-[0_0_10px_rgba(212,175,55,0.5)]" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19,10C19,10 19,9 18,9C17,9 17,10 17,10C16,10 16,8 14,8C12,8 12,10 12,10C11,10 11,9 10,9C9,9 9,10 9,10C8,10 8,8 6,8C4,8 4,10 4,10C3,10 3,9 2,9C1,9 1,10 1,10C1,12 2,13 2,15C2,17 3,18 5,18H19C21,18 22,17 22,15C22,13 23,12 23,10C23,10 23,9 22,9C21,9 21,10 21,10C20,10 20,8 18,8C16,8 16,10 16,10M7,14C6.45,14 6,13.55 6,13C6,12.45 6.45,12 7,12C7.55,12 8,12.45 8,13C8,13.55 7.55,14 7,14M17,14C16.45,14 16,13.55 16,13C16,12.45 16.45,12 17,12C17.55,12 18,12.45 18,13C18,13.55 17.55,14 17,14M12,20C11.45,20 11,19.55 11,19C11,18.45 11.45,18 12,18C12.55,18 13,18.45 13,19C13,19.55 12.55,20 12,20Z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Header Section -->
+            <div class="mb-10">
+                <div class="inline-block mb-6 px-4 py-1 border-b border-yellow-500/30">
+                    <span class="text-yellow-500 font-bold tracking-[0.3em] text-xs uppercase">Eid Mubarak Greeting</span>
+                </div>
+                <h1 class="font-amiri text-5xl md:text-8xl gold-text font-bold mb-4">
+                    عيد أضحى مبارك
+                </h1>
+            </div>
+
+            <!-- Profile Section -->
+            <div class="space-y-6 mb-12">
+                <div class="flex flex-col items-center">
+                    <div class="h-[1px] w-24 bg-gradient-to-r from-transparent via-yellow-500 to-transparent mb-4"></div>
+                    <p class="text-slate-400 text-sm md:text-base uppercase tracking-widest mb-2 font-light">Software Engineer</p>
+                    <h2 class="text-3xl md:text-5xl font-black text-white tracking-tight">
+                        أحمد شعلان
+                    </h2>
+                    <div class="h-[1px] w-24 bg-gradient-to-r from-transparent via-yellow-500 to-transparent mt-4"></div>
+                </div>
+            </div>
+
+            <!-- Message Section -->
+            <div class="space-y-6 relative z-10">
+                <div class="text-lg md:text-xl text-slate-300 font-light leading-relaxed space-y-4">
+                    <p>
+                        بمناسبة حلول عيد الأضحى المبارك، أتقدم إليكم بأسمى آيات التهاني والتبريكات.
+                    </p>
+                    <p>
+                        أتمنى لكم عيداً مليئاً بالفرح والسعادة، وأن يعيده الله علينا وعليكم بالخير واليمن والبركات.
+                    </p>
+                </div>
+                <div class="py-6">
+                    <span class="font-amiri text-4xl md:text-6xl text-yellow-200 italic drop-shadow-[0_0_15px_rgba(254,240,138,0.3)]">
+                        "كل عام وأنتم بخير"
+                    </span>
+                </div>
+            </div>
+
+            <!-- Footer Icons -->
+            <div class="mt-12 flex justify-center items-center gap-8 text-yellow-500/40">
+                <div class="w-12 h-[1px] bg-yellow-500/20"></div>
+                <i class="fas fa-star text-sm animate-pulse"></i>
+                <i class="fas fa-star text-lg animate-pulse"></i>
+                <i class="fas fa-star text-sm animate-pulse"></i>
+                <div class="w-12 h-[1px] bg-yellow-500/20"></div>
+            </div>
+        </div>
+
+        <!-- Copy/Signature -->
+        <div class="mt-12 space-y-2 opacity-50">
+            <p class="text-xs uppercase tracking-[0.4em] text-yellow-500/60">Designed for Excellence</p>
+            <p class="text-sm text-slate-500 font-light">Ahmed Shalan &copy; 2026</p>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('bg-music');
+        const startBtn = document.getElementById('start-btn');
+        const overlay = document.getElementById('interaction-overlay');
+        const mainContent = document.getElementById('main-content');
+
+        startBtn.addEventListener('click', () => {
+            audio.play().catch(e => console.log(e));
+
+            overlay.classList.add('opacity-0', 'scale-110');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                mainContent.classList.remove('opacity-0', 'scale-95');
+                mainContent.classList.add('opacity-100', 'scale-100');
+                launchConfetti();
+            }, 800);
+        });
+
+        // Stars Background
+        const starsContainer = document.getElementById('stars-container');
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = (Math.random() * 2 + 1) + 'px';
+            star.style.width = size;
+            star.style.height = size;
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+            starsContainer.appendChild(star);
+        }
+
+        function launchConfetti() {
+            const end = Date.now() + (4 * 1000);
+            const colors = ['#d4af37', '#f9e29c', '#ffffff'];
+
+            (function frame() {
+                confetti({
+                    particleCount: 3,
+                    angle: 60,
+                    spread: 55,
+                    origin: {
+                        x: 0
+                    },
+                    colors: colors
+                });
+                confetti({
+                    particleCount: 3,
+                    angle: 120,
+                    spread: 55,
+                    origin: {
+                        x: 1
+                    },
+                    colors: colors
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+    </script>
+</body>
+
+</html>
