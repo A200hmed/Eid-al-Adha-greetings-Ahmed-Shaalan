@@ -177,10 +177,62 @@
             border-color: var(--gold);
             color: var(--gold);
         }
+        
+        .greeting-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .greeting-card:hover {
+            background: rgba(212, 175, 55, 0.05);
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .audio-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 200;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--gold);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .audio-control:hover {
+            transform: scale(1.1);
+            background: rgba(212, 175, 55, 0.4);
+        }
     </style>
 </head>
 
 <body class="premium-gradient min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+
+    <!-- Audio Controls -->
+    <div id="audio-toggle" class="audio-control">
+        <i class="fas fa-volume-up"></i>
+    </div>
 
     <!-- Background Decoration -->
     <div id="parallax-scene" class="absolute inset-0 opacity-30 pointer-events-none overflow-hidden">
@@ -206,7 +258,7 @@
 
     <!-- Main Content -->
     <div id="main-content" class="max-w-4xl w-full text-center z-10 opacity-0 transform scale-90 translate-y-10 transition-all duration-1000 ease-out py-10">
-        <div class="glass-card p-6 md:p-20 rounded-[3rem] relative overflow-hidden mx-auto">
+        <div class="glass-card p-6 md:p-20 rounded-[3rem] relative overflow-hidden mx-auto mb-10">
 
             <!-- Elegant Corner Ornaments -->
             <div class="absolute top-0 right-0 p-8 opacity-20">
@@ -265,30 +317,76 @@
             <!-- Message Section -->
             <div class="space-y-8 relative z-10 max-w-2xl mx-auto">
                 <div class="text-xl md:text-2xl text-slate-300 font-light leading-relaxed space-y-6">
-                    <p class="opacity-90">
+                    <p class="opacity-90 reveal">
                         بمناسبة حلول عيد الأضحى المبارك، أتقدم إليكم بأسمى آيات التهاني والتبريكات، سائلاً المولى عز وجل أن يتقبل منا ومنكم صالح الأعمال.
                     </p>
-                    <p class="opacity-90">
+                    <p class="opacity-90 reveal">
                         أتمنى لكم عيداً سعيداً يغمره الفرح، وأن يعيده الله علينا وعليكم بموفور الصحة والعافية والمسرات.
                     </p>
                 </div>
-                <div class="py-10">
+                <div class="py-10 reveal">
                     <span class="font-amiri text-5xl md:text-7xl text-yellow-200 drop-shadow-[0_0_20px_rgba(254,240,138,0.4)] block mb-2">
                         "كل عام وأنتم بخير"
                     </span>
                     <span class="text-yellow-500/40 text-sm tracking-[0.2em]">- ١٤٤٧ هـ -</span>
                 </div>
             </div>
+        </div>
 
-            <!-- Interactive Share -->
-            <div class="mt-16 flex flex-wrap justify-center items-center gap-4">
-                <button onclick="shareWhatsApp()" class="share-btn flex items-center gap-3 px-8 py-3 rounded-xl text-slate-300">
+        <!-- New Section: Greetings Collection -->
+        <div class="reveal max-w-5xl mx-auto px-4 mb-20">
+            <h3 class="font-amiri text-4xl text-yellow-500 mb-10 tracking-widest">مختارات من التهاني</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="greeting-card p-8 rounded-2xl text-right">
+                    <i class="fas fa-quote-right text-yellow-500/30 text-2xl mb-4"></i>
+                    <p class="text-slate-300 leading-loose font-light">
+                        لكم من القلب أخلص الدعاء، ومن الروح أسمى الثناء، عيدكم مبارك وتقبل الله طاعاتكم ورفع قدركم.
+                    </p>
+                </div>
+                <div class="greeting-card p-8 rounded-2xl text-right">
+                    <i class="fas fa-quote-right text-yellow-500/30 text-2xl mb-4"></i>
+                    <p class="text-slate-300 leading-loose font-light">
+                        باقة أزهار وورود وسلة بخور وعود، والعيد عليكم يعود وكل عام وأنتم بألف خير وسعادة.
+                    </p>
+                </div>
+                <div class="greeting-card p-8 rounded-2xl text-right">
+                    <i class="fas fa-quote-right text-yellow-500/30 text-2xl mb-4"></i>
+                    <p class="text-slate-300 leading-loose font-light">
+                        جعل الله فجر عيدكم نوراً، وظهره سروراً، وعصره استبشاراً، ومغربه غفراناً، وجعل لكم دعوة لا تُرد.
+                    </p>
+                </div>
+                <div class="greeting-card p-8 rounded-2xl text-right">
+                    <i class="fas fa-quote-right text-yellow-500/30 text-2xl mb-4"></i>
+                    <p class="text-slate-300 leading-loose font-light">
+                        تقبل الله منا ومنكم صالح الأعمال، وأسكنكم جنات النعيم، ورزقكم في العيد بهجة لا تنتهي.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Section: Special Prayer -->
+        <div class="reveal max-w-3xl mx-auto glass-card p-10 rounded-[2rem] mb-20 border-blue-500/20 bg-blue-500/5">
+            <i class="fas fa-hands-praying text-4xl text-blue-400 mb-6"></i>
+            <h4 class="font-amiri text-3xl text-blue-200 mb-6">دعاء العيد</h4>
+            <p class="text-slate-300 text-xl leading-relaxed font-amiri italic">
+                "اللهم إنا نسألك في هذا العيد أن تملأ قلوبنا بالرضا، وبيوتنا بالسعادة، وأيامنا بالخير، وأن تجمعنا دائماً على طاعتك ومحبتك."
+            </p>
+        </div>
+
+        <!-- Final Interactive Controls -->
+        <div class="flex flex-wrap justify-center items-center gap-6 mb-20">
+            <button onclick="launchConfetti()" class="btn-premium px-10 py-4 rounded-xl text-slate-900 font-bold flex items-center gap-3">
+                <i class="fas fa-wand-magic-sparkles"></i>
+                <span>إعادة الاحتفال</span>
+            </button>
+            <div class="flex gap-4">
+                <button onclick="shareWhatsApp()" class="share-btn flex items-center gap-3 px-8 py-4 rounded-xl text-slate-300">
                     <i class="fab fa-whatsapp text-xl"></i>
-                    <span>مشاركة عبر واتساب</span>
+                    <span>واتساب</span>
                 </button>
-                <button onclick="copyLink()" class="share-btn flex items-center gap-3 px-8 py-3 rounded-xl text-slate-300">
+                <button onclick="copyLink()" class="share-btn flex items-center gap-3 px-8 py-4 rounded-xl text-slate-300">
                     <i class="fas fa-link text-xl"></i>
-                    <span id="copy-text">نسخ الرابط</span>
+                    <span id="copy-text">نسخ</span>
                 </button>
             </div>
         </div>
@@ -310,20 +408,56 @@
         const startBtn = document.getElementById('start-btn');
         const overlay = document.getElementById('interaction-overlay');
         const mainContent = document.getElementById('main-content');
+        const audioToggle = document.getElementById('audio-toggle');
+
+        let isAudioPlaying = false;
 
         // Audio controls
         startBtn.addEventListener('click', () => {
-            audio.volume = 0.5;
-            audio.play().catch(e => console.log("Audio play blocked"));
+            toggleAudio(true);
 
             overlay.classList.add('opacity-0', 'scale-110');
             setTimeout(() => {
                 overlay.style.display = 'none';
                 mainContent.classList.remove('opacity-0', 'scale-90', 'translate-y-10');
                 mainContent.classList.add('opacity-100', 'scale-100', 'translate-y-0');
+                audioToggle.style.display = 'flex';
                 launchConfetti();
+                handleReveal();
             }, 800);
         });
+
+        function toggleAudio(play) {
+            if (play) {
+                audio.volume = 0.5;
+                audio.play().catch(e => console.log("Audio play blocked"));
+                audioToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                isAudioPlaying = true;
+            } else {
+                audio.pause();
+                audioToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                isAudioPlaying = false;
+            }
+        }
+
+        audioToggle.addEventListener('click', () => {
+            toggleAudio(!isAudioPlaying);
+        });
+
+        // Reveal animations on scroll
+        function handleReveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(reveal => {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveal.getBoundingClientRect().top;
+                const elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', handleReveal);
 
         // Parallax Effect
         document.addEventListener('mousemove', (e) => {
@@ -402,7 +536,7 @@
                 const copyText = document.getElementById('copy-text');
                 copyText.innerText = "تم النسخ! ✓";
                 setTimeout(() => {
-                    copyText.innerText = "نسخ الرابط";
+                    copyText.innerText = "نسخ";
                 }, 2000);
             });
         }
